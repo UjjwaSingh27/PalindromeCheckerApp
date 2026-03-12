@@ -1,36 +1,68 @@
-import java.util.*;
+import java.util.LinkedList;
+import java.util.Scanner;
+
+/**
+ * =====================================================
+ * MAIN CLASS - UseCase8PalindromeCheckerApp
+ * =====================================================
+ *
+ * Use Case 8: Linked List Based Palindrome Checker
+ *
+ * Description:
+ * This class checks whether a string is a palindrome
+ * using a LinkedList.
+ *
+ * Characters are added to the list and then compared
+ * by removing elements from both ends:
+ *  - removeFirst()
+ *  - removeLast()
+ *
+ * This demonstrates how LinkedList supports
+ * double-ended operations for symmetric validation.
+ *
+ * @author Developer
+ * @version 8.0
+ */
 
 public class PalindromeCheckerApp {
 
+    /**
+     * Application entry point for UC8.
+     * @param args Command-line arguments
+     */
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
-        System.out.println("=== UC7: Deque Based Palindrome Check ===");
 
-        System.out.print("Enter a word: ");
+        System.out.print("Enter a string: ");
         String input = scanner.nextLine();
 
-        Deque<Character> deque = new LinkedList<>();
+        // Create LinkedList
+        LinkedList<Character> list = new LinkedList<>();
 
-        // Add characters to deque
-        for(char c : input.toCharArray()) {
-            deque.add(c);
+        // Add characters to LinkedList
+        for (char c : input.toCharArray()) {
+            list.add(c);
         }
 
         boolean isPalindrome = true;
 
-        // Compare from both ends
-        while(deque.size() > 1) {
-            if(deque.removeFirst() != deque.removeLast()) {
+        // Compare first and last characters
+        while (list.size() > 1) {
+            char first = list.removeFirst();
+            char last = list.removeLast();
+
+            if (first != last) {
                 isPalindrome = false;
                 break;
             }
         }
 
-        if(isPalindrome) {
-            System.out.println(input + " is a Palindrome (Deque Method)");
+        // Print result
+        if (isPalindrome) {
+            System.out.println("Palindrome");
         } else {
-            System.out.println(input + " is NOT a Palindrome");
+            System.out.println("Not a Palindrome");
         }
 
         scanner.close();
