@@ -1,3 +1,4 @@
+
 public class PalindromeCheckerApp {
     public static void main(String[] args) {
         // UC1: Application Entry & Welcome Message
@@ -6,16 +7,24 @@ public class PalindromeCheckerApp {
         System.out.println("Application Version: 1.0");
         System.out.println("-----------------------------------------");
 
-        // UC2: Print a Hardcoded Palindrome Result
-        // Hardcoded string to check
-        String input = "madam";
+        // UC3: Palindrome Check Using String Reverse
+        String original = "madam";
+        String reversed = "";
 
-        // Logical check for a palindrome (for a simple hardcoded case, we manually
-        // verify "madam" is a palindrome)
-        if (input.equals("madam")) {
-            System.out.println("The word \"" + input + "\" is a Palindrome.");
+        // Reverse the string using a for loop
+        // Key concept: String concatenation and loop iteration
+        for (int i = original.length() - 1; i >= 0; i--) {
+            reversed = reversed + original.charAt(i);
+        }
+
+        System.out.println("Original String: " + original);
+        System.out.println("Reversed String: " + reversed);
+
+        // Compare original and reversed using equals()
+        if (original.equals(reversed)) {
+            System.out.println("The word \"" + original + "\" is a Palindrome.");
         } else {
-            System.out.println("The word \"" + input + "\" is NOT a Palindrome.");
+            System.out.println("The word \"" + original + "\" is NOT a Palindrome.");
         }
     }
 }
