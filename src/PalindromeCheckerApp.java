@@ -1,18 +1,15 @@
-
 import java.util.*;
 
-// Strategy Interface
-interface PalindromeStrategy {
-    boolean isPalindrome(String input);
-}
+public class PalindromeUC13 {
 
+    // Method 1: Reverse String
+    public static boolean reverseMethod(String input) {
+        String reversed = new StringBuilder(input).reverse().toString();
+        return input.equals(reversed);
+    }
 
-// Strategy 1: Using Stack
-class StackStrategy implements PalindromeStrategy {
-
-    public boolean isPalindrome(String input) {
-
-        input = input.replaceAll("\\s+", "").toLowerCase();
+    // Method 2: Stack Method
+    public static boolean stackMethod(String input) {
 
         Stack<Character> stack = new Stack<>();
 
@@ -28,83 +25,59 @@ class StackStrategy implements PalindromeStrategy {
 
         return input.equals(reversed);
     }
-}
 
+    // Method 3: Two Pointer Method
+    public static boolean twoPointerMethod(String input) {
 
-// Strategy 2: Using Deque
-class DequeStrategy implements PalindromeStrategy {
+        int left = 0;
+        int right = input.length() - 1;
 
-    public boolean isPalindrome(String input) {
+        while (left < right) {
 
-        input = input.replaceAll("\\s+", "").toLowerCase();
-
-        Deque<Character> deque = new ArrayDeque<>();
-
-        for (char c : input.toCharArray()) {
-            deque.addLast(c);
-        }
-
-        while (deque.size() > 1) {
-
-            if (deque.removeFirst() != deque.removeLast()) {
+            if (input.charAt(left) != input.charAt(right)) {
                 return false;
             }
+
+            left++;
+            right--;
         }
 
         return true;
     }
-}
-
-
-// PalindromeChecker class (Context class)
-class PalindromeChecker {
-
-    private PalindromeStrategy strategy;
-
-    // Inject strategy at runtime
-    public PalindromeChecker(PalindromeStrategy strategy) {
-        this.strategy = strategy;
-    }
-
-    public boolean checkPalindrome(String input) {
-        return strategy.isPalindrome(input);
-    }
-}
-
-
-// Main Application
-public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("===== Palindrome Checker App =====");
-        System.out.println("Choose Algorithm:");
-        System.out.println("1. Stack Strategy");
-        System.out.println("2. Deque Strategy");
+        System.out.println("===== Palindrome Performance Comparison =====");
+        System.out.print("Enter a string: ");
 
-        int choice = sc.nextInt();
-        sc.nextLine();
+        String input = sc.nextLine().replaceAll("\\s+", "").toLowerCase();
 
-        System.out.print("Enter String: ");
-        String input = sc.nextLine();
+        // Reverse Method
+        long start1 = System.nanoTime();
+        boolean result1 = reverseMethod(input);
+        long end1 = System.nanoTime();
 
-        PalindromeStrategy strategy;
+        // Stack Method
+        long start2 = System.nanoTime();
+        boolean result2 = stackMethod(input);
+        long end2 = System.nanoTime();
 
-        if (choice == 1) {
-            strategy = new StackStrategy();
-        } else {
-            strategy = new DequeStrategy();
-        }
+        // Two Pointer Method
+        long start3 = System.nanoTime();
+        boolean result3 = twoPointerMethod(input);
+        long end3 = System.nanoTime();
 
-        PalindromeChecker checker = new PalindromeChecker(strategy);
+        System.out.println("\nResults:");
+        System.out.println("Reverse Method: " + result1 +
+                " | Time: " + (end1 - start1) + " ns");
 
-        if (checker.checkPalindrome(input)) {
-            System.out.println("The string is a Palindrome.");
-        } else {
-            System.out.println("The string is NOT a Palindrome.");
-        }
+        System.out.println("Stack Method: " + result2 +
+                " | Time: " + (end2 - start2) + " ns");
+
+        System.out.println("Two Pointer Method: " + result3 +
+                " | Time: " + (end3 - start3) + " ns");
 
         sc.close();
     }
